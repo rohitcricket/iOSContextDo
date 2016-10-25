@@ -25,8 +25,13 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -65,12 +70,21 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         performSegue(withIdentifier: "addSegue", sender: nil)
     }
     
+    func getTasks(){
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        do {
+             tasks = try context.fetch(Task.fetchRequest()) as! [Task]
+        } catch {
+            print("We have an error!")
+        }
+       
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "addSegue" {
-            let nextVC = segue.destination as! CreateTaskViewController
-            nextVC.previousVC = self
-        }
         
         if segue.identifier == "selectTaskSegue" {
             let nextVC = segue.destination as! CompleteTaskViewController
