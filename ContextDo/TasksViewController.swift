@@ -21,7 +21,7 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tasks = makeTasks()
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -58,21 +58,6 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
     }
     
-    func makeTasks() -> [Task] {
-        let task1 = Task()
-        task1.name = "Laundry clothes"
-        task1.important = false
-        
-        let task2 = Task()
-        task2.name = "start biz"
-        task2.important = true
-        
-        let task3 = Task()
-        task3.name = "walk the dog"
-        task3.important = false
-        
-        return [task1, task2, task3]
-    }
     
     
     @IBAction func plusTapped(_ sender: AnyObject) {
