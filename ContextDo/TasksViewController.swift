@@ -14,7 +14,6 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     
     var tasks : [Task] = []
-    var selectedIndex = 0
     
 
     override func viewDidLoad() {
@@ -30,6 +29,7 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     override func viewWillAppear(_ animated: Bool) {
         getTasks()
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,7 +49,7 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         if task.important {
             cell.textLabel?.text = "❗️\(task.name)"
         } else {
-            cell.textLabel?.text = task.name
+            cell.textLabel?.text = task.name!
         }
         
         return cell
@@ -58,7 +58,6 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
-        selectedIndex = indexPath.row
         let task = tasks[indexPath.row]
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
     }
@@ -88,8 +87,8 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if segue.identifier == "selectTaskSegue" {
             let nextVC = segue.destination as! CompleteTaskViewController
-            nextVC.task = sender as! Task
-            nextVC.previousVC = self
+            nextVC.task = sender as? Task
+    
         }
     }
 
