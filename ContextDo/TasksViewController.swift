@@ -47,7 +47,7 @@ class TasksViewController: UIViewController, UITableViewDataSource, UITableViewD
         let task = tasks[indexPath.row]
         
         if task.important {
-            cell.textLabel?.text = "❗️\(task.name)"
+            cell.textLabel?.text = "❗️\(task.name!)"
         } else {
             cell.textLabel?.text = task.name!
         }
